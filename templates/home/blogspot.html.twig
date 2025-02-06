@@ -1,32 +1,16 @@
 <div class="container mx-auto px-4 py-10 bg-white">
     <h1 class="text-3xl font-bold text-center mb-8">Dernières actualités</h1>
 
-    <div class="flex flex-wrap justify-between">
-        <!-- Card 1 -->
-        <div class="w-full md:w-1/3 px-4 mb-6">
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden p-6 flex flex-col justify-between h-full">
-                <h2 class="text-xl font-semibold">Titre de l'Article 1</h2>
-                <p class="text-gray-700 mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae nisi at magna.</p>
-                <p class="text-gray-500 text-sm mt-4">Publié le 5/02/2025</p>
+    <!-- ✅ Utilisation de "flex" pour mettre 3 cartes par ligne -->
+    <div class="flex flex-wrap -mx-4">
+        {% for blogpost in blogposts %}
+            <div class="w-full md:w-1/3 px-4 mb-6"> <!-- ✅ Chaque carte occupe 1/3 de la largeur -->
+                <div class="bg-white shadow-lg rounded-lg overflow-hidden p-6 flex flex-col justify-between h-full">
+                    <h2 class="text-xl font-semibold">{{ blogpost.titre }}</h2>
+                    <p class="text-gray-700 mt-2">{{ blogpost.contenu | u.truncate(150, '...', false) }}</p>
+                    <p class="text-gray-500 text-sm mt-4">{{ blogpost.createdAt|date('d/m/Y') }}</p>
+                </div>
             </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="w-full md:w-1/3 px-4 mb-6">
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden p-6 flex flex-col justify-between h-full">
-                <h2 class="text-xl font-semibold">Titre de l'Article 2</h2>
-                <p class="text-gray-700 mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae nisi at magna.</p>
-                <p class="text-gray-500 text-sm mt-4">Publié le 5/02/2025</p>
-            </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="w-full md:w-1/3 px-4 mb-6">
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden p-6 flex flex-col justify-between h-full">
-                <h2 class="text-xl font-semibold">Titre de l'Article 3</h2>
-                <p class="text-gray-700 mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae nisi at magna.</p>
-                <p class="text-gray-500 text-sm mt-4">Publié le 5/02/2025</p>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
