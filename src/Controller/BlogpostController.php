@@ -2,33 +2,34 @@
 
 namespace App\Controller;
 
-use App\Repository\PeintureRepository;
+use App\Repository\BlogpostRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class PeintureController extends AbstractController
+final class BlogpostController extends AbstractController
 {
-    #[Route('/realisations', name: 'realisations')]
-    public function realisations(
-        PeintureRepository $peintureRepository,
+    #[Route('/actualites', name: 'app_blogpost')]
+    public function actualites(
+
+        BlogpostRepository $blogRepository,
         PaginatorInterface $paginator,
         Request            $request,
-
     ): Response
     {
-        $data = $peintureRepository->findAll();
+        $data = $blogRepository->findAll();
 
-        $peintures = $paginator->paginate(
+        $blogposts = $paginator->paginate(
             $data,
             $request->query->getInt('page', 1),
             6
         );
+
         {
-            return $this->render('peinture/realisations.html.twig', [
-                'peintures' => $peintures,
+            return $this->render('blogpost/actualites.html.twig', [
+                'blogposts' => $blogposts,
             ]);
         }
     }
