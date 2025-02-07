@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class BlogpostController extends AbstractController
 {
-    #[Route('/actualites', name: 'app_blogpost')]
+    #[Route('/actualites', name: 'actualites')]
     public function actualites(
 
         BlogpostRepository $blogRepository,
