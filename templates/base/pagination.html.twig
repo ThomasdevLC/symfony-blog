@@ -1,0 +1,62 @@
+{% if pageCount > 1 %}
+    <nav class="flex justify-center mt-4" role="navigation" aria-label="Pagination">
+        <ul class="inline-flex items-center space-x-2">
+            {% if previous is defined %}
+                <li>
+                    <a rel="prev" href="{{ path(route, knp_pagination_query(query, previous)) }}"
+                       class="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l hover:bg-gray-100">
+                        « Précédent
+                    </a>
+                </li>
+            {% else %}
+                <li>
+                    <span class="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-100 border border-gray-300 rounded-l cursor-not-allowed">
+                        « Précédent
+                    </span>
+                </li>
+            {% endif %}
+
+            {% if pagesInRange[0] - first >= 2 %}
+                <li>
+                    <span class="px-4 py-2 text-sm font-medium text-gray-500">...</span>
+                </li>
+            {% endif %}
+
+            {% for page in pagesInRange %}
+                <li>
+                    {% if page == current %}
+                        <span class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 rounded">
+                            {{ page }}
+                        </span>
+                    {% else %}
+                        <a href="{{ path(route, knp_pagination_query(query, page)) }}"
+                           class="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-100">
+                            {{ page }}
+                        </a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+
+            {% if last - pagesInRange[pagesInRange|length - 1] >= 2 %}
+                <li>
+                    <span class="px-4 py-2 text-sm font-medium text-gray-500">...</span>
+                </li>
+            {% endif %}
+
+            {% if next is defined %}
+                <li>
+                    <a rel="next" href="{{ path(route, knp_pagination_query(query, next)) }}"
+                       class="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r hover:bg-gray-100">
+                        Suivant »
+                    </a>
+                </li>
+            {% else %}
+                <li>
+                    <span class="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-100 border border-gray-300 rounded-r cursor-not-allowed">
+                        Suivant »
+                    </span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
