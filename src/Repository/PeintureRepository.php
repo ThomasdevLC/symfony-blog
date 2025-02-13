@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Categorie;
 use App\Entity\Peinture;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -29,13 +30,14 @@ class PeintureRepository extends ServiceEntityRepository
             ;
         }
 
-    //    public function findOneBySomeField($value): ?Peinture
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findAllPortfolio(Categorie $categorie): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where(':categorie MEMBER OF p.categorie')
+            ->andWhere('p.portfolio = TRUE')
+            ->setParameter('categorie', $categorie) // Passez l'objet entier ici
+            ->getQuery()
+            ->getResult();
+    }
+
 }

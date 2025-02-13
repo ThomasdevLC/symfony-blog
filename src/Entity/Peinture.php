@@ -56,7 +56,8 @@ class Peinture
     /**
      * @var Collection<int, Categorie>
      */
-    #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'peintures')]
+    #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'peintures', fetch: 'EAGER')]
+    #[ORM\JoinTable(name: 'peinture_categorie')]
     private Collection $categorie;
 
     /**

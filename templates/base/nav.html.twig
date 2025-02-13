@@ -9,9 +9,24 @@
         <div class="hidden md:flex space-x-6">
             <a href="{{ path('realisations') }}" class="text-gray-700 hover:text-blue-600 transition">Réalisations</a>
             <a href="{{ path('actualites') }}" class="text-gray-700 hover:text-blue-600 transition">Actualités</a>
-            <a href="#" class="text-gray-700 hover:text-blue-600 transition">Portfolio</a>
+
+            <!-- Portfolio avec sous-menu dynamique -->
+            <div class="relative group">
+                <a href="{{ path('portfolio') }}" class="text-gray-700 hover:text-blue-600 transition">Portfolio</a>
+
+                <!-- Sous-menu -->
+                <div class="absolute left-0 hidden group-hover:block bg-white shadow-lg rounded-lg py-2 w-48">
+                    {% for categorie in categorieNavbar() %}
+                        <a href="{{ path('portfolio_categorie', { 'slug': categorie.slug }) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            {{ categorie.nom }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+
             <a href="{{ path('a_propos') }}" class="text-gray-700 hover:text-blue-600 transition">À propos</a>
         </div>
+
 
         <!-- Bouton Me Contacter -->
         <div class="hidden md:block">

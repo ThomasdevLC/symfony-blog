@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\BlogpostRepository;
+use App\Repository\PeintureRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,5 +33,21 @@ final class BlogpostController extends AbstractController
                 'blogposts' => $blogposts,
             ]);
         }
+    }
+
+    #[Route('/actualites/{slug}', name: 'actualites_detail')]
+    public function details(
+        BlogpostRepository $blogpostRepository, string $slug
+    ): Response
+    {
+        $blogpost = $blogpostRepository->findOneBy(['slug' => $slug]);
+
+        if (!$blogpost) {
+            throw $this->createNotFoundException('Le post n\'existe pas');
+        }
+
+        return $this->render('blogpost/details.html.twig', [
+            'blogpost' => $blogpost,
+        ]);
     }
 }

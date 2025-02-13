@@ -59,39 +59,35 @@ class AppFixtures extends Fixture
         $categories = [];
         for ($i = 0; $i < 5; $i++) {
             $categorie = new Categorie();
-            $nomCategorie = ucfirst($faker->word());
-            $categorie->setNom($nomCategorie);
+
+            $categorie->setNom($faker->word);
             $categorie->setDescription($faker->sentence(10));
-            $categorie->setSlug($this->slugger->slug($nomCategorie)->lower());
+            $categorie->setSlug($faker->slug());
 
             $manager->persist($categorie);
-            $categories[] = $categorie; // Stocker les catégories pour les peintures
-        }
 
-        for ($i = 0; $i < 10; $i++) {
-            $peinture = new Peinture();
-            $peinture->setNom($faker->words(3, true));
-            $peinture->setLargeur($faker->randomFloat(2, 30, 200)); // Largeur entre 30 et 200 cm
-            $peinture->setHauteur($faker->randomFloat(2, 30, 200)); // Hauteur entre 30 et 200 cm
-            $peinture->setEnVente($faker->boolean());
-            $peinture->setDateRealisation($faker->dateTimeBetween('-2 years', 'now'));
-            $peinture->setCreatedAt(new \DateTimeImmutable());
-            $peinture->setDescription($faker->text());
-            $peinture->setPortfolio($faker->boolean());
-            $peinture->setSlug($this->slugger->slug($faker->words(3, true))->lower());
-            $peinture->setFile('/img/pic.jpg'); // Image fictive
-            $peinture->setPrix($faker->randomFloat(2, 50, 1000));
-            $peinture->setUser($user);
 
-            // Associer entre 1 et 3 catégories aléatoires
-            $categoriesSelectionnees = (array) array_rand($categories, mt_rand(1, 3));
-            foreach ($categoriesSelectionnees as $index) {
-                $peinture->addCategorie($categories[$index]);
+            for ($i = 0; $i < 10; $i++) {
+                $peinture = new Peinture();
+                $peinture->setNom($faker->words(3, true));
+                $peinture->setLargeur($faker->randomFloat(2, 30, 200)); // Largeur entre 30 et 200 cm
+                $peinture->setHauteur($faker->randomFloat(2, 30, 200)); // Hauteur entre 30 et 200 cm
+                $peinture->setEnVente($faker->boolean());
+                $peinture->setDateRealisation($faker->dateTimeBetween('-2 years', 'now'));
+                $peinture->setCreatedAt(new \DateTimeImmutable());
+                $peinture->setDescription($faker->text());
+                $peinture->setPortfolio($faker->boolean());
+                $peinture->setSlug($faker->slug());
+                $peinture->setFile('/img/pic.jpg');
+                $peinture->addCategorie($categorie);
+                $peinture->setPrix($faker->randomFloat(2, 50, 1000));
+                $peinture->setUser($user);
+
+
+                $manager->persist($peinture);
             }
 
-            $manager->persist($peinture);
+            $manager->flush();
         }
-
-        $manager->flush();
     }
 }

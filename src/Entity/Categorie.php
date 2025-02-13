@@ -25,9 +25,7 @@ class Categorie
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    /**
-     * @var Collection<int, Peinture>
-     */
+
     #[ORM\ManyToMany(targetEntity: Peinture::class, mappedBy: 'categorie')]
     private Collection $peintures;
 
