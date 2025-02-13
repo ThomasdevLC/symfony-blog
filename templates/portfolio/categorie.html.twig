@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="bg-white">
+        <div class="container mx-auto px-4 py-10 bg-white max-w-screen-lg">
+            <h1 class="text-3xl font-bold text-center mb-8"> {{ categorie.nom }}</h1>
+
+            {% if peintures is empty %}
+                <p class="text-gray-500 text-center">Aucune peinture disponible pour cette catégorie.</p>
+            {% else %}
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    {% for peinture in peintures %}
+                        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                            <img src="{{ peinture.file }}" alt="Réalisation" class="w-full h-56 object-cover">
+                            <div class="p-6 flex flex-col justify-between">
+                                <h2 class="text-xl font-semibold">{{ peinture.nom }}</h2>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

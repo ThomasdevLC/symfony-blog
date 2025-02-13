@@ -32,4 +32,20 @@ final class PeintureController extends AbstractController
             ]);
         }
     }
+
+    #[Route('/realisations/{slug}', name: 'realisation_details')]
+    public function details(
+        PeintureRepository $peintureRepository, string $slug
+    ): Response
+    {
+        $peinture = $peintureRepository->findOneBy(['slug' => $slug]);
+
+        if (!$peinture) {
+            throw $this->createNotFoundException('La peinture n\'existe pas');
+        }
+
+        return $this->render('peinture/details.html.twig', [
+            'peinture' => $peinture,
+        ]);
+    }
 }

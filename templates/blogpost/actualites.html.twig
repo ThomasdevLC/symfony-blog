@@ -1,26 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BlogpostController!{% endblock %}
+{% block title %}Actualités{% endblock %}
 
 {% block body %}
     <div class="bg-white">
         <div class="container mx-auto px-4 py-10 bg-white max-w-screen-lg">
-            <h1 class="text-3xl font-bold text-center mb-8"> Actualité</h1>
+            <h1 class="text-3xl font-bold text-center mb-8">Actualités</h1>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {% for blogpost in blogposts %}
-                    <!-- Card -->
-                    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                        <div class="p-6 flex flex-col justify-between">
-                            <h2 class="text-xl font-semibold">{{ blogpost.titre }}</h2>
-                            <p class="text-gray-700 mt-2">{{ blogpost.contenu | u.truncate(200, '...', false) }}</p>
-                            <p class="text-gray-500 text-sm mt-4">Ajoutée le {{ blogpost.createdAt|date('d/m/Y') }}</p>
+                    <!-- Card avec lien vers le détail -->
+                    <a href="{{ path('actualites_detail', {'slug': blogpost.slug}) }}" class="block">
+                        <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300">
+                            <div class="p-6 flex flex-col justify-between">
+                                <h2 class="text-xl font-semibold text-gray-900">{{ blogpost.titre }}</h2>
+                                <p class="text-gray-700 mt-2">{{ blogpost.contenu | u.truncate(200, '...', false) }}</p>
+                                <p class="text-gray-500 text-sm mt-4">Ajoutée le {{ blogpost.createdAt|date('d/m/Y') }}</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 {% endfor %}
             </div>
         </div>
+
         {% do blogposts.setPageRange(2) %}
-        {{ knp_pagination_render(blogposts, 'base/pagination.html.twig')}}
+        {{ knp_pagination_render(blogposts, 'base/pagination.html.twig') }}
     </div>
 {% endblock %}
