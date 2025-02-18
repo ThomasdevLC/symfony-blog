@@ -2,6 +2,7 @@
 
 namespace App\Tests;
 
+use App\Entity\Commentaire;
 use App\Entity\Peinture;
 use App\Entity\User;
 use App\Entity\Categorie;
@@ -56,6 +57,8 @@ class PeintureUnitTest extends TestCase
 
         $peinture->setUser($user);
         $this->assertEquals($user, $peinture->getUser());
+        $this->assertNull($peinture->getId());
+
     }
 
     public function testCategorieAssociation(): void
@@ -75,4 +78,19 @@ class PeintureUnitTest extends TestCase
         $this->assertCount(1, $peinture->getCategorie());
         $this->assertFalse($peinture->getCategorie()->contains($categorie1));
     }
+
+    public function testAddGetRemoveComment(): void
+    {
+        $peinture = new Peinture();
+        $commentaire = new Commentaire();
+
+        $this->assertEmpty($peinture->getCommentaires());
+
+        $peinture->addCommentaire($commentaire);
+        $this->assertContains($commentaire, $peinture->getCommentaires());
+
+        $peinture->removeCommentaire($commentaire);
+        $this->assertEmpty($peinture->getCommentaires());
+    }
+
 }

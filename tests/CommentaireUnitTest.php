@@ -25,6 +25,8 @@ class CommentaireUnitTest extends TestCase
         $createdAt = new \DateTime();
         $commentaire->setCreatedAt($createdAt);
         $this->assertEquals($createdAt, $commentaire->getCreatedAt());
+        $this->assertNull($commentaire->getId());
+
     }
 
     public function testPeintureAssociation(): void
