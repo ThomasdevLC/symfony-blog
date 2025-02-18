@@ -12,6 +12,10 @@ use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+/**
+ * @codeCoverageIgnore
+ */
+
 class AppFixtures extends Fixture
 {
     private $hasher;
@@ -55,6 +59,18 @@ class AppFixtures extends Fixture
             $manager->persist($blogpost);
         }
 
+
+            $blogpost = new Blogpost();
+            $blogpost->setTitre('blogpost test');
+            $blogpost->setCreatedAt($faker->dateTimeBetween('-1 years', 'now'));
+            $blogpost->setContenu($faker->text(350));
+            $blogpost->setSlug('blogpost-test');
+            $blogpost->setUser($user);
+
+            $manager->persist($blogpost);
+
+
+
         // 🔹 Génération de 5 catégories
         $categories = [];
         for ($i = 0; $i < 5; $i++) {
@@ -86,6 +102,33 @@ class AppFixtures extends Fixture
 
                 $manager->persist($peinture);
             }
+
+            $categorie = new Categorie();
+
+            $categorie->setNom('categorie test');
+            $categorie->setDescription($faker->sentence(10));
+            $categorie->setSlug('categorie-test');
+
+            $manager->persist($categorie);
+
+            $peinture = new Peinture();
+            $peinture->setNom('peinture test');
+            $peinture->setLargeur($faker->randomFloat(2, 30, 200)); // Largeur entre 30 et 200 cm
+            $peinture->setHauteur($faker->randomFloat(2, 30, 200)); // Hauteur entre 30 et 200 cm
+            $peinture->setEnVente($faker->boolean());
+            $peinture->setDateRealisation($faker->dateTimeBetween('-2 years', 'now'));
+            $peinture->setCreatedAt(new \DateTimeImmutable());
+            $peinture->setDescription($faker->text());
+            $peinture->setPortfolio($faker->boolean());
+            $peinture->setSlug('peinture-test');
+            $peinture->setFile('/img/pic.jpg');
+            $peinture->addCategorie($categorie);
+            $peinture->setPrix($faker->randomFloat(2, 50, 1000));
+            $peinture->setUser($user);
+
+
+            $manager->persist($peinture);
+
 
             $manager->flush();
         }
