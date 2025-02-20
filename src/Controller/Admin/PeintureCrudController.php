@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
 class PeintureCrudController extends AbstractCrudController
 {
@@ -37,5 +38,11 @@ class PeintureCrudController extends AbstractCrudController
             AssociationField::new('categorie'),
 
         ];
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setDefaultSort(['createdAt' => 'DESC']);
     }
 }

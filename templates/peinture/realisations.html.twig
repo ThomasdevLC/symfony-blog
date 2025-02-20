@@ -11,7 +11,7 @@
                 {% for peinture in peintures %}
                     <!-- Card -->
                     <a href="{{ path('realisation_details', {'slug': peinture.slug}) }}" class="block bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300">
-                        <img src="{{ peinture.file }}" alt="Réalisation" class="w-full h-56 object-cover">
+                        <img src="{{ vich_uploader_asset(peinture,'imageFile') }}" alt="Réalisation" class="w-full h-56 object-cover">
                         <div class="p-6 flex flex-col justify-between">
                             <h2 class="text-xl font-semibold">{{ peinture.nom }}</h2>
                             <p class="text-gray-700 mt-2">{{ peinture.description | u.truncate(200, '...', false) }}</p>
