@@ -11,7 +11,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     {% for peinture in peintures %}
                         <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                            <img src="{{ peinture.file }}" alt="Réalisation" class="w-full h-56 object-cover">
+                            <img src="{{  vich_uploader_asset(peinture,'imageFile') }}" alt="Réalisation" class="w-full h-56 object-cover">
                             <div class="p-6 flex flex-col justify-between">
                                 <h2 class="text-xl font-semibold">{{ peinture.nom }}</h2>
                             </div>

@@ -9,9 +9,10 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 ">
             {% for categorie in categories %}
-                {% set img = categorie.peintures | last %} {#  Récupérer la dernière peinture de la catégorie actuelle #}
+                {% set peinture = categorie.peintures | last %} {#  Récupérer la dernière peinture de la catégorie actuelle #}
                 <div class="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer">
-                    <a href="{{ path('portfolio_categorie', {'slug': categorie.slug}) }}">                        <img src="{{ img.file }}" alt="Réalisation" class="w-full h-56 object-cover">
+                    <a href="{{ path('portfolio_categorie', {'slug': categorie.slug}) }}">
+                        <img src="{{  vich_uploader_asset(peinture,'imageFile') }}" alt="Réalisation" class="w-full h-56 object-cover">
                     <div class="p-6 flex flex-col justify-between">
                         <h2 class="text-xl font-semibold">{{ categorie.nom }}</h2>
                         <p class="text-gray-700 mt-2">{{ categorie.description | u.truncate(200, '...', false) }}</p>

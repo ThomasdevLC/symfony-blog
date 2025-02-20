@@ -19,7 +19,7 @@ final class PeintureController extends AbstractController
 
     ): Response
     {
-        $data = $peintureRepository->findAll();
+        $data = $peintureRepository->findBy([],['id' => 'DESC']);
 
         $peintures = $paginator->paginate(
             $data,

@@ -3,6 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Blogpost;
+use App\Entity\Peinture;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -22,25 +23,32 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            BeforeEntityPersistedEvent::class => ['setBlogPostSlugAndDateAndUser']
+            BeforeEntityPersistedEvent::class => ['setDateAndUser']
         ];
     }
-public function setBlogPostSlugAndDateAndUser(BeforeEntityPersistedEvent $event): void
+public function setDateAndUser(BeforeEntityPersistedEvent $event): void
 {
     $entity = $event->getEntityInstance();
 
+
     if (!($entity instanceof Blogpost)) {
-        return;
+        $now = new \DateTime('now');
+        $entity->setCreatedAt($now);
+
+        $user = $this->security->getUser();
+        $entity->setUser($user);
     }
 
-    $slug = $this->slugger->slug($entity->getTitre());
-    $entity->setSlug($slug);
+    if($entity instanceof Peinture){
+        $now = new \DateTime('now');
+        $entity->setCreatedAt($now);
 
-    $now = new \DateTime('now');
-    $entity->setCreatedAt($now);
+        $user = $this->security->getUser();
+        $entity->setUser($user);
+    }
 
-    $user = $this->security->getUser();
-    $entity->setUser($user);
+    return;
+
 }
 
 }
