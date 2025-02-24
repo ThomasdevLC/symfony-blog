@@ -25,3 +25,6 @@
 ###< symfony/asset-mapper ###
 /public/uploads/peintures/*
 !public/uploads/peintures/pic.jpg
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
