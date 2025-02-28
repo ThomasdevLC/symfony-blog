@@ -1,0 +1,65 @@
+
+{% block body %}
+    <div class="max-w-2xl mx-auto mt-10">
+        <!-- Bouton pour ouvrir la modale -->
+        <button id="openModal" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+            Laisser un commentaire
+        </button>
+
+        <!-- Modale cachée initialement -->
+        <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden">
+            <div class="bg-white p-6 rounded-2xl shadow-md max-w-lg w-full relative">
+                <button id="closeModal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
+                    ✖
+                </button>
+
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Laisser un commentaire</h2>
+
+                {{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
+
+                <div>
+                    <label class="block text-gray-700 font-medium">Nom</label>
+                    {{ form_widget(form.auteur, {'attr': {'class': 'w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none'}}) }}
+                    {{ form_errors(form.auteur) }}
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-medium">Email</label>
+                    {{ form_widget(form.email, {'attr': {'class': 'w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none'}}) }}
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-medium">Commentaire</label>
+                    {{ form_widget(form.contenu, {'attr': {'class': 'w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none h-24'}}) }}
+                    {{ form_errors(form.contenu) }}
+                </div>
+
+                <div class="flex justify-between items-center mt-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                        Envoyer
+                    </button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Script JavaScript pour gérer l'affichage de la modale -->
+    <script>
+        document.getElementById('openModal').addEventListener('click', function () {
+            document.getElementById('modal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeModal').addEventListener('click', function () {
+            document.getElementById('modal').classList.add('hidden');
+        });
+
+        window.addEventListener('click', function (event) {
+            if (event.target === document.getElementById('modal')) {
+                document.getElementById('modal').classList.add('hidden');
+            }
+        });
+    </script>
+{% endblock %}
