@@ -1,0 +1,28 @@
+{% if commentaires is not empty %}
+    <div class="max-w-2xl mx-auto mt-8 bg-white p-6 rounded-2xl shadow-md">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Commentaires ({{ commentaires|length }})</h2>
+
+        {% for commentaire in commentaires %}
+            <div class="border-b border-gray-200 py-4">
+                <div class="flex items-center space-x-3">
+                    <div class="flex-shrink-0">
+                        <span class="inline-block w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-700">
+                            {{ commentaire.auteur ? commentaire.auteur|first|upper : '?' }}
+                        </span>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-900">{{ commentaire.auteur }}</p>
+                        <p class="text-sm text-gray-500">{{ commentaire.createdAt|date('d/m/Y H:i') }}</p>
+                    </div>
+                </div>
+                <p class="mt-2 text-gray-700">
+                    {{ commentaire.contenu|nl2br }}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="max-w-2xl mx-auto mt-8 bg-white p-6 rounded-2xl shadow-md">
+        <p class="text-gray-600">Aucun commentaire pour le moment. Soyez le premier à réagir !</p>
+    </div>
+{% endif %}
